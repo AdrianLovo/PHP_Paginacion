@@ -4,7 +4,7 @@
 
     class Peliculas extends DB{
 
-        private $paginaActual;
+        private $paginaActual = 1;
         private $totalPaginas;
         private $nResultados;
         private $resultadosPorPagina;
@@ -14,24 +14,25 @@
         function __construct($nPorPagina){
             parent::__construct();
             $this->resultadosPorPagina = $nPorPagina;
-            $this->indice = 1;
+            $this->indice = 0;
             $this->calcularPaginas();
         }
 
         function calcularPaginas(){
             $query = $this->connect()->query('SELECT COUNT(*) AS total FROM bdpaginacion.post');
             $this->nResultados = $query->fetch(PDO::FETCH_OBJ)->total;
-            $this->totalPaginas = round($this->nResultados / $this->resultadosPorPagina);
+            $this->totalPaginas = round($this->nResultados / $this->resultadosPorPagina);            
 
             if(isset($_GET['pagina'])){
                 
                 //Validar que pagina sea un numero
                 if(is_numeric($_GET['pagina'])){
-                    
+
                     //Validar que pagina sea mayor o igual a 1 y menor o igual a totalPaginas
-                    if($_GET['pagina'] >= 1 && $_GET['pagina'] <= $this->totalPaginas){
+                    if($_GET['pagina'] >= 1 && $_GET['pagina'] <= $this->totalPaginas){                      
                         $this->paginaActual = $_GET['pagina'];
-                        $this->indice = ($this->paginaActual - 1) * ($this->resultadosPorPagina);
+                        $this->indice = ($this->paginaActual - 1) * ($this->resultadosPorPagina);   
+                       
                     }else{
                         echo "No existe esa pagina";
                         $this->error = true;
@@ -49,18 +50,13 @@
                 $query->execute(['pos' => $this->indice, 'n' => $this->resultadosPorPagina]);
 
                 foreach($query as $pelicula){
-                    include 'vista-pelicula.php';
+                    include 'AppBasica/vista-pelicula.php';
                 }
-            }else{
-
             }
         }
 
         function mostrarPaginas(){
-            $actual = '';
-            $this->paginaActual = 1;
-            echo("Pagina actual " . $this->paginaActual . "----");
-
+            $actual = '';            
             echo "<ul>";
     
             for($i=0; $i < $this->totalPaginas; $i++){
@@ -80,3 +76,5 @@
 
     }
 
+
+    

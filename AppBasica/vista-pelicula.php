@@ -1,6 +1,5 @@
 <div class="pelicula">
-    <img src= <?php echo($pelicula['URL']); ?> alt="" width=130>
-    <?php echo($pelicula['URL']); ?>
+    <img src=<?php echo($pelicula['URL']); ?> alt=<?php echo($pelicula['Titulo']); ?> width=280>  
     <p>
         <?php
             echo( $pelicula['Titulo']);

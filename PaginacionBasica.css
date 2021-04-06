@@ -2,12 +2,12 @@ body{
     font-family: Arial;
 }
 #container{
-    width: 500px;
+    width: 1024px;
     margin: 0 auto;
 }
 .pelicula{
     display: inline-block;
-    width: 120px;
+    width: 300px;
     padding: 10px;
     text-align: center;
     vertical-align: top;
